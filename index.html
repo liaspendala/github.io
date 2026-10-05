@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MPI Informatika — Teknologi Informasi dan Komunikasi</title>
+<style>
+:root{--font-scale:1;--b:#0ea5e9;--b2:#2563eb;--o:#f97316;--g:#10b981;--p:#8b5cf6;--ink:#1e293b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f9ff url('bg-ruang-kelas_.jpg') center/cover no-repeat fixed;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+body::before{content:"";position:fixed;inset:0;background:rgba(240,249,255,.82);z-index:0}
+#stage-16-9{position:relative;z-index:1;width:min(100vw,calc(100vh*16/9));aspect-ratio:16/9;background:transparent;border:none;box-shadow:none;border-radius:0;overflow:hidden;font-size:calc(15px*var(--font-scale,1));transform-origin:center;transition:transform .2s}
+.pg{position:absolute;inset:0;display:none;flex-direction:column;padding:clamp(10px,1.8vh,18px);gap:clamp(8px,1.4vh,14px);overflow:hidden}
+.pg.on{display:flex;animation:fi .35s}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+.bar{display:flex;align-items:center;gap:10px;flex:none}
+.title{font-size:clamp(16px,2.2vh,22px);font-weight:800;color:#fff;background:linear-gradient(90deg,var(--b2),var(--b));padding:8px 22px;border-radius:30px;box-shadow:0 4px 12px rgba(37,99,235,.3);flex:1;text-align:center}
+.cb{width:clamp(40px,5.2vh,48px);height:clamp(40px,5.2vh,48px);border-radius:50%;border:none;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.2);font-size:clamp(18px,2.3vh,23px);cursor:pointer;flex:none;font-weight:800}
+.cb:hover{transform:scale(1.1)}
+.pill{background:#fff;border:3px solid var(--b);border-radius:30px;padding:6px 14px;font-weight:800;font-size:clamp(12px,1.6vh,15px);cursor:pointer;color:var(--b2);flex:none}
+.card{background:rgba(255,255,255,.95);border-radius:20px;box-shadow:0 6px 18px rgba(30,64,175,.18);padding:clamp(10px,1.8vh,18px)}
+.txt{font-size:clamp(13px,1.65vh,16px);font-weight:600;line-height:1.48}
+.ib{width:clamp(66px,9vh,88px);height:clamp(66px,9vh,88px);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:clamp(34px,4.8vh,46px);flex:none;box-shadow:0 5px 12px rgba(0,0,0,.2)}
+.btn{font-size:clamp(13.5px,1.8vh,17px);padding:10px 22px;border-radius:30px;border:none;background:linear-gradient(135deg,var(--b),var(--b2));color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #1e40af}
+.btn:active{transform:translateY(3px);box-shadow:none}
+/* cover */
+#p1{justify-content:space-between}
+.head{display:flex;align-items:center;gap:14px;background:#fff;border-radius:50px;padding:8px 24px 8px 12px;box-shadow:0 5px 15px rgba(0,0,0,.18);align-self:center;flex:none}
+.head img{height:clamp(50px,6.8vh,68px)}
+.head b{display:block;font-size:clamp(14px,2vh,19px)}.head small{font-weight:700;color:#475569;font-size:clamp(11px,1.5vh,14px)}
+.bdg{background:linear-gradient(135deg,var(--o),#facc15);color:#fff;font-weight:800;border-radius:20px;padding:4px 12px;font-size:clamp(11px,1.5vh,14px);margin-left:4px}
+.mid{text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,2vh,22px)}
+.ct{font-size:clamp(2.8rem,6.8vw,5.2rem);font-weight:900;line-height:1;color:var(--b2);text-shadow:-4px -4px 0 #fff,4px -4px 0 #fff,-4px 4px 0 #fff,4px 5px 0 #fff,0 8px 10px rgba(0,0,0,.3)}
+.cs{font-size:clamp(1.4rem,3.2vw,2.6rem);font-weight:900;color:var(--o);text-shadow:-3px -3px 0 #fff,3px -3px 0 #fff,-3px 3px 0 #fff,3px 3px 0 #fff}
+.play{display:flex;align-items:center;gap:16px;background:none;border:none;cursor:pointer}
+.play i{width:clamp(60px,8.5vh,80px);height:clamp(60px,8.5vh,80px);border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-style:normal;font-size:clamp(26px,3.6vh,36px);display:flex;align-items:center;justify-content:center;animation:pg 1.6s infinite}
+.play span{font-size:clamp(24px,3.8vh,36px);font-weight:900;color:#15803d;text-shadow:2px 2px 0 #fff,-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff}
+@keyframes pg{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}50%{box-shadow:0 0 0 22px rgba(34,197,94,0);transform:scale(1.08)}}
+.foot{text-align:center;background:rgba(255,255,255,.92);border-radius:16px;padding:8px;font-weight:700;font-size:clamp(12px,1.7vh,16px);flex:none}
+/* menu */
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:clamp(10px,1.8vh,18px);min-height:0}
+.mc{display:flex;align-items:center;gap:14px;cursor:pointer;border:4px solid transparent;transition:.2s;min-height:0}
+.mc:hover{transform:translateY(-5px) rotate(-1deg);border-color:var(--o)}
+.mc h3{font-size:clamp(15px,2vh,20px);font-weight:800;color:var(--b2)}
+.mc p{font-size:clamp(12px,1.55vh,15px);font-weight:600;margin-top:4px;line-height:1.35}
+/* tp */
+.tp{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.6vh,16px)}
+.tpi{display:flex;gap:14px;align-items:center;background:#f0f9ff;border-radius:16px;padding:10px 16px;border-left:6px solid var(--o)}
+.tpi span{font-size:clamp(24px,3.6vh,34px)}
+/* materi */
+.mg{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:clamp(8px,1.4vh,14px);min-height:0}
+.mk{display:flex;flex-direction:column;gap:6px;overflow:hidden;min-height:0}
+.mk>div{display:flex;align-items:center;gap:12px}
+.mk h4{font-size:clamp(15px,2vh,20px);font-weight:800;color:var(--b2)}
+.mk .txt{font-size:clamp(12.5px,1.6vh,15.5px)}
+/* sim */
+.sim{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
+.sim svg{width:100%;height:clamp(260px,44vh,420px);background:#fff;border-radius:18px;box-shadow:0 6px 18px rgba(30,64,175,.2);flex:none}
+.part{cursor:pointer;transition:.2s}.part:hover{filter:brightness(.93)}
+.part.sel rect.r{animation:pu 1s infinite;stroke:#ef4444;stroke-width:5}
+@keyframes pu{50%{stroke-width:2;fill-opacity:.5}}
+.tel{display:flex;gap:10px;align-items:center;flex:1;min-height:0}
+/* eval */
+.ev{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:0;position:relative}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.op{font-size:clamp(13.5px,1.8vh,17px);padding:10px 22px;border:3px solid var(--b);background:#fff;border-radius:16px;font-weight:700;cursor:pointer;color:var(--ink)}
+.op:hover{background:#e0f2fe}.op.ok{background:#bbf7d0;border-color:#16a34a}.op.no{background:#fecaca;border-color:#dc2626}
+.mt{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px 28%}
+.mt svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.mi{background:#fff;border:3px solid var(--b);border-radius:14px;padding:9px 12px;font-weight:700;font-size:clamp(12.5px,1.7vh,16px);cursor:pointer;z-index:2;position:relative}
+.mi.s{background:#fef08a;border-color:var(--o)}.mi.d{background:#bbf7d0;border-color:#16a34a;cursor:default}
+.tf{display:flex;gap:16px;justify-content:center}
+.big{font-size:clamp(44px,6vh,60px);filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
+.sc{font-size:clamp(3rem,9vh,5rem);font-weight:900;color:var(--o)}
+/* profil */
+.prof{flex:1;display:flex;align-items:center;justify-content:center;gap:clamp(20px,4vw,50px)}
+.ph{width:clamp(130px,18vh,175px);height:clamp(130px,18vh,175px);border-radius:50%;padding:5px;background:linear-gradient(135deg,var(--o),var(--b),var(--p));filter:drop-shadow(0 8px 10px rgba(0,0,0,.35));flex:none}
+.ph img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center 20%;background:#fff;display:block}
+#modal{position:absolute;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:9}
+#modal.on{display:flex}
+</style></head><body>
+<div id="stage-16-9">
+
+<section class="pg on" id="p1">
+ <div class="head"><img src="Logo.jpg" alt="" onerror="this.style.display='none'"><div><b class="sch"></b><small>Dinas Pendidikan</small></div><span class="bdg">Kurikulum Merdeka</span><span class="bdg" style="background:linear-gradient(135deg,#8b5cf6,#2563eb)">Fase D</span></div>
+ <div class="mid"><div class="ct" id="ctitle"></div><div class="cs">Aplikasi Pengolah Kata, Lembar Kerja &amp; Presentasi</div><button class="play" onclick="go(2)"><i>▶</i><span>MULAI</span></button></div>
+ <div class="foot">Dikembangkan oleh <span class="tch"></span> • <span class="sch"></span><br>“Belajar Informatika itu seru, kreatif, dan bermakna!”</div>
+</section>
+
+<section class="pg" id="p2">
+ <div class="bar"><button class="pill" onclick="go(1)">🏠 BERANDA</button><div class="title">Menu Utama — Media Pembelajaran Interaktif Informatika</div><button class="cb" onclick="fs(-.1)" title="Perkecil huruf">A-</button><button class="cb" onclick="fs(.1)" title="Perbesar huruf">A+</button><button class="cb" onclick="zm(-.05)">➖</button><button class="cb" onclick="zm(.05)">➕</button><button class="cb" id="snd" onclick="togSnd()">🔊</button></div>
+ <div class="grid" id="menu"></div>
+</section>
+
+<section class="pg" id="p3">
+ <div class="bar"><button class="pill" onclick="go(2)">⬅ MENU</button><div class="title">🎯 Tujuan Pembelajaran</div></div>
+ <div class="card tp txt" style="font-size:clamp(13.5px,1.9vh,16px)">
+  <div class="tpi"><span>🎓</span><div><b>Tujuan Umum:</b> Memahami struktur dari konten dan fitur utama aplikasi pengolah kata, pengolah lembar kerja, dan presentasi.</div></div>
+  <div class="tpi"><span>📝</span><div>Peserta didik mampu <b>menjelaskan struktur jendela dan fitur utama</b> aplikasi pengolah kata (ribbon, penggaris, area dokumen, status bar).</div></div>
+  <div class="tpi"><span>📊</span><div>Peserta didik mampu <b>mengidentifikasi struktur lembar kerja</b>: sel, kolom, baris, name box, formula bar, dan menyusun rumus sederhana.</div></div>
+  <div class="tpi"><span>🖥️</span><div>Peserta didik mampu <b>menjelaskan struktur dan fitur presentasi</b>: slide, tata letak, transisi, dan animasi.</div></div>
+  <div class="tpi"><span>🏆</span><div>Peserta didik mampu <b>membedakan fungsi</b> ketiga aplikasi dan memilih yang tepat sesuai kebutuhan.</div></div>
+ </div>
+</section>
+
+<section class="pg" id="p4">
+ <div class="bar"><button class="pill" onclick="go(2)">⬅ MENU</button><div class="title">📖 Materi: Aplikasi Perkantoran (TIK)</div></div>
+ <div class="mg" id="mg"></div>
+</section>
+
+<section class="pg" id="p5">
+ <div class="bar"><button class="pill" onclick="go(2)">⬅ MENU</button><div class="title">🕹️ Laboratorium Virtual: Jelajahi Jendela Aplikasi</div></div>
+ <div class="sim">
+  <div class="bar" style="justify-content:center"><button class="btn" id="m0" onclick="mode(0)">📝 Word</button><button class="btn" id="m1" onclick="mode(1)" style="background:linear-gradient(135deg,#22c55e,#15803d);box-shadow:0 4px 0 #14532d">📊 Excel</button><button class="btn" id="m2" onclick="mode(2)" style="background:linear-gradient(135deg,#fb923c,#ea580c);box-shadow:0 4px 0 #9a3412">🖥️ PowerPoint</button></div>
+  <svg id="svg" viewBox="0 0 800 340"></svg>
+  <div class="card tel txt"><span class="big">📡</span><div id="telem"><b>Telemetri:</b> Klik salah satu bagian pada jendela aplikasi untuk mempelajari fungsinya.</div></div>
+ </div>
+</section>
+
+<section class="pg" id="p6">
+ <div class="bar"><button class="pill" onclick="go(2)">⬅ MENU</button><div class="title" id="evt">📝 Evaluasi</div><div class="pill" id="evs">Skor: 0</div></div>
+ <div class="card ev" id="ev"></div>
+</section>
+
+<section class="pg" id="p7">
+ <div class="bar"><button class="pill" onclick="go(2)">⬅ MENU</button><div class="title">👨‍🏫 Profil Guru Pengembang</div></div>
+ <div class="prof card" style="flex:1">
+  <div class="ph"><img src="Guru.png" alt="Foto Guru" onerror="this.style.display='none'"></div>
+  <div style="max-width:55%;display:flex;flex-direction:column;gap:10px">
+   <div style="font-size:clamp(20px,3vh,24px);font-weight:900;color:var(--b2)" class="tch"></div>
+   <div class="txt" style="font-size:clamp(13px,1.9vh,15px)">🏫 Guru Informatika — <span class="sch"></span><br>📚 Mata Pelajaran: Informatika, Fase D (Kelas VIII)</div>
+   <div class="tpi txt" style="font-style:italic">“Teknologi adalah alat. Guru dan siswa yang kreatiflah yang membuatnya bermakna.”</div>
+  </div>
+ </div>
+</section>
+
+<div id="modal" onclick="this.classList.remove('on')"><div class="card" style="max-width:62%;text-align:center;border:5px solid var(--o)"><div class="big">💡</div><h3 style="color:var(--b2);font-size:clamp(16px,2.2vh,22px)">Tahukah Kamu?</h3><p class="txt" id="fact" style="font-size:clamp(14px,2vh,18px);margin:10px 0"></p><button class="btn" onclick="event.stopPropagation();fact()">Fakta lain ➜</button> <button class="btn" style="background:#64748b;box-shadow:0 4px 0 #334155">Tutup</button></div></div>
+</div>
+
+<script>
+/* ===== DATA IDENTITAS (Bagian 1) ===== */
+const CFG={sekolah:"SMP Negeri 2 Laren",guru:"Nasyiatul Ula Alhaqqiyah, S.Kom",materi:"TEKNOLOGI INFORMASI DAN KOMUNIKASI"};
+document.getElementById('ctitle').textContent=CFG.materi;
+document.querySelectorAll('.sch').forEach(e=>e.textContent=CFG.sekolah);
+document.querySelectorAll('.tch').forEach(e=>e.textContent=CFG.guru);
+const $=id=>document.getElementById(id);
+/* ===== AUDIO ===== */
+let AC,on=true;
+function tone(f,t,d,ty='sine',v=.15,f2){if(!on)return;AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.setValueAtTime(f,AC.currentTime+t);if(f2)o.frequency.linearRampToValueAtTime(f2,AC.currentTime+t+d);g.gain.setValueAtTime(v,AC.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t+d);o.connect(g);g.connect(AC.destination);o.start(AC.currentTime+t);o.stop(AC.currentTime+t+d)}
+const sClick=()=>tone(450,0,.12,'sine',.15,880),sOk=()=>[523,659,784].forEach((f,i)=>tone(f,i*.1,.25,'triangle')),sNo=()=>{tone(180,0,.3,'sawtooth',.12,120)},sInfo=()=>tone(660,0,.15,'square',.06,990);
+function togSnd(){on=!on;$('snd').textContent=on?'🔊':'🔇';sClick()}
+document.addEventListener('click',e=>{if(e.target.closest('button,.mc,.pill'))sClick()},true);
+/* ===== NAV & AKSESIBILITAS ===== */
+let fsc=1,zs=1;
+function go(n){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));$('p'+n).classList.add('on');if(n==6)evStart();if(n==5)mode(0)}
+function fs(d){fsc=Math.min(1.25,Math.max(.8,fsc+d));document.documentElement.style.setProperty('--font-scale',fsc)}
+function zm(d){zs=Math.min(1.15,Math.max(.8,zs+d));$('stage-16-9').style.transform='scale('+zs+')'}
+/* ===== MENU ===== */
+const M=[["🎯","Tujuan Pembelajaran","Capaian & indikator kompetensi siswa","#fde68a",3],["📖","Materi Pembelajaran","Konsep kunci Word, Excel & PowerPoint","#bfdbfe",4],["🕹️","Simulasi Interaktif","Jelajahi jendela aplikasi secara virtual","#bbf7d0",5],["📝","Evaluasi Multi-Format","3 babak uji pemahaman, total 100 poin","#fecaca",6],["👨‍🏫","Profil Guru","Fasilitator pembelajaran","#ddd6fe",7],["💡","Wawasan & Fakta","Fakta menarik seputar aplikasi kantor","#fed7aa",0]];
+$('menu').innerHTML=M.map(m=>`<div class="card mc" onclick="${m[4]?'go('+m[4]+')':'fact()'}"><div class="ib" style="background:${m[3]}">${m[0]}</div><div><h3>${m[1]}</h3><p>${m[2]}</p></div></div>`).join('');
+/* ===== MATERI ===== */
+const MT=[["📝","Pengolah Kata (Word)","#bfdbfe","Aplikasi untuk membuat, menyunting, dan memformat dokumen teks seperti surat, laporan, dan makalah. Contoh: Microsoft Word, Google Docs, LibreOffice Writer."],
+["🔤","Struktur & Fitur Word","#c7d2fe","Jendela Word terdiri dari Ribbon (tab perintah), penggaris, area dokumen, dan status bar. Fitur utama: format huruf, paragraf, tabel, gambar, header-footer, dan nomor halaman."],
+["📊","Pengolah Lembar Kerja","#bbf7d0","Aplikasi untuk mengolah data angka dalam tabel. Data tersimpan di sel yang dibentuk oleh kolom (A, B, C) dan baris (1, 2, 3). Contoh: Excel, Google Sheets."],
+["🧮","Rumus & Fungsi","#fef08a","Rumus diawali tanda “=”. Contoh: =A1+B1. Fungsi umum: SUM (jumlah), AVERAGE (rata-rata), MAX, MIN, dan COUNT. Hasil terhitung otomatis saat data berubah."],
+["🖥️","Aplikasi Presentasi","#fed7aa","Digunakan menyampaikan ide lewat kumpulan slide. Struktur: panel slide, slide aktif, catatan, dan ribbon. Contoh: PowerPoint, Google Slides, Canva."],
+["✨","Desain, Transisi & Animasi","#fbcfe8","Tata letak (layout) dan tema membuat slide rapi. Transisi mengatur perpindahan antarslide, animasi menggerakkan objek. Gunakan secukupnya agar fokus pada isi."]];
+$('mg').innerHTML=MT.map(m=>`<div class="card mk"><div><div class="ib" style="background:${m[2]};width:clamp(54px,7.4vh,72px);height:clamp(54px,7.4vh,72px);font-size:clamp(28px,4vh,38px)">${m[0]}</div><h4>${m[1]}</h4></div><p class="txt">${m[3]}</p></div>`).join('');
+/* ===== SIMULASI ===== */
+const SIM=[{c:"#2563eb",n:"Microsoft Word",p:[
+[10,38,780,28,"Tab Menu (Home, Insert, Layout)","Ribbon berisi tab dan grup perintah: Home (format), Insert (tabel, gambar), Layout (margin, orientasi)."],
+[10,70,780,50,"Grup Format: Font & Paragraf","Mengatur jenis, ukuran, warna huruf, rata teks, spasi, dan poin/penomoran."],
+[10,126,780,18,"Penggaris (Ruler)","Mengatur margin, indentasi paragraf, dan tabulasi."],
+[150,150,500,150,"Area Dokumen","Tempat mengetik dan menyusun isi dokumen: teks, tabel, gambar, dan bentuk."],
+[10,308,780,26,"Status Bar: Halaman & Kata","Menampilkan nomor halaman, jumlah kata, bahasa, serta kontrol zoom dan tampilan."]],doc:1},
+{c:"#16a34a",n:"Microsoft Excel",p:[
+[10,38,120,26,"Name Box","Menampilkan alamat sel aktif, misalnya C5 (kolom C, baris 5)."],
+[140,38,650,26,"Formula Bar (=A1+B1)","Menampilkan dan menyunting isi atau rumus pada sel yang aktif."],
+[10,70,780,22,"Header Kolom A, B, C","Penanda kolom berupa huruf. Perpotongan kolom dan baris membentuk sel."],
+[10,96,780,200,"Sel & Lembar Kerja","Area kerja berisi sel-sel tempat data angka, teks, dan rumus."],
+[10,304,780,30,"Sheet Tab (Lembar 1)","Berpindah antar lembar kerja dalam satu buku kerja (workbook)."]],grid:1},
+{c:"#ea580c",n:"Microsoft PowerPoint",p:[
+[10,38,780,40,"Ribbon: Design, Transitions","Berisi tab Design (tema), Transitions (perpindahan), dan Animations (gerak objek)."],
+[10,86,150,214,"Panel Slide","Daftar miniatur slide untuk memilih, mengurutkan, dan menduplikasi slide."],
+[170,86,460,214,"Slide Aktif","Kanvas utama untuk menata judul, teks, gambar, dan grafik."],
+[640,86,150,214,"Panel Format","Pengaturan desain dan animasi objek yang dipilih."],
+[10,306,780,28,"Catatan & Tampilan","Notes untuk catatan presenter serta pilihan tampilan: Normal, Sorter, Slideshow."]]}];
+let cm=0;
+function mode(i){cm=i;sClick();const s=SIM[i];let h=`<defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="${s.c}"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs><rect x="0" y="0" width="800" height="340" fill="#f1f5f9"/><rect width="800" height="32" fill="url(#gg)"/><text x="14" y="21" font-size="14" font-weight="800" fill="#fff">${s.n}</text><circle cx="740" cy="16" r="6" fill="#fde047"/><circle cx="760" cy="16" r="6" fill="#4ade80"/><circle cx="780" cy="16" r="6" fill="#f87171"/>`;
+s.p.forEach((p,k)=>{const[x,y,w,hh,l]=p,cx=x+w/2,cy=y+hh/2,pw=l.length*7.6+18;
+let deco='';
+if(s.doc&&k==3)for(let j=0;j<7;j++)deco+=`<line x1="${x+20}" y1="${y+22+j*17}" x2="${x+w-20-(j%3)*60}" y2="${y+22+j*17}" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>`;
+if(s.grid&&k==3){for(let j=1;j<10;j++)deco+=`<line x1="${x+j*78}" y1="${y}" x2="${x+j*78}" y2="${y+hh}" stroke="#bbf7d0" stroke-width="2"/>`;for(let j=1;j<7;j++)deco+=`<line x1="${x}" y1="${y+j*28}" x2="${x+w}" y2="${y+j*28}" stroke="#bbf7d0" stroke-width="2"/>`;deco+=`<rect x="${x+156}" y="${y+56}" width="78" height="28" fill="none" stroke="#16a34a" stroke-width="5"/>`}
+if(i==2&&k==1)for(let j=0;j<3;j++)deco+=`<rect x="${x+20}" y="${y+14+j*66}" width="110" height="52" rx="6" fill="#fff" stroke="#fdba74" stroke-width="3"/>`;
+if(i==2&&k==2)deco+=`<circle cx="${x+120}" cy="${y+150}" r="26" fill="#fed7aa" stroke="#fb923c" stroke-width="4"/><line x1="${x+40}" y1="${y+30}" x2="${x+300}" y2="${y+30}" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>`;
+const ty=(k==3&&(s.doc||s.grid))||i==2&&k==2?cy:cy;
+h+=`<g class="part" data-k="${k}" onclick="pick(${k})"><rect class="r" x="${x}" y="${y}" width="${w}" height="${hh}" rx="8" fill="${k==3&&s.doc?'#fff':s.c}" fill-opacity="${k==3&&s.doc?1:.18}" stroke="${s.c}" stroke-width="3"/>${deco}<rect x="${cx-pw/2}" y="${ty-12}" width="${pw}" height="24" rx="6" fill="#fff" stroke="${s.c}" stroke-width="1.5"/><text x="${cx}" y="${ty+5}" text-anchor="middle" font-size="13" font-weight="800" fill="#1e293b">${l}</text></g>`});
+$('svg').innerHTML=h;$('telem').innerHTML=`<b>Telemetri:</b> Mode <b>${s.n}</b> aktif. Klik bagian jendela yang berlabel untuk melihat fungsinya.`}
+function pick(k){sOk();document.querySelectorAll('.part').forEach(e=>e.classList.toggle('sel',e.dataset.k==k));const p=SIM[cm].p[k];$('telem').innerHTML=`<b>${p[4]}</b><br>${p[5]}`}
+/* ===== FAKTA ===== */
+const F=["Spreadsheet elektronik pertama, VisiCalc (1979), dianggap membuat komputer pribadi populer di dunia bisnis.","Ekstensi berkas Word adalah .docx, Excel adalah .xlsx, dan PowerPoint adalah .pptx.","Satu lembar kerja Excel modern memiliki lebih dari 1 juta baris dan 16 ribu kolom.","Pintasan keyboard Ctrl+S menyimpan berkas, Ctrl+C menyalin, dan Ctrl+V menempel di hampir semua aplikasi kantor.","Slide presentasi yang baik memuat sedikit teks dan banyak gagasan visual."];let fi=0;
+function fact(){$('fact').textContent=F[fi++%F.length];$('modal').classList.add('on');sInfo()}
+/* ===== EVALUASI ===== */
+const Q=[["Alamat sel pada perpotongan kolom C dan baris 5 ditulis ...",["C5","5C","C-5","CC5"],0],["Aplikasi yang tepat untuk membuat slide dengan transisi dan animasi adalah ...",["Microsoft Word","Microsoft Excel","Microsoft PowerPoint","Paint"],2],["Bagian jendela Word yang menampilkan jumlah halaman dan kata berada pada ...",["Ribbon","Status Bar","Formula Bar","Name Box"],1]];
+const MP=[["Ribbon","Kumpulan tab dan perintah di bagian atas jendela"],["Formula Bar","Menampilkan isi atau rumus sel aktif"],["Transisi","Efek perpindahan antarslide"],["Sheet Tab","Berpindah antar lembar kerja"]];
+const TF=[["Rumus di aplikasi lembar kerja diawali dengan tanda sama dengan (=).",1],["Fungsi utama Word adalah menghitung data besar dengan banyak rumus otomatis.",0],["Animasi pada PowerPoint berfungsi menggerakkan objek di dalam slide.",1]];
+let S;
+function evStart(){S={st:0,q:0,sc:[0,0,0],t:0};evR()}
+function upd(){$('evs').textContent='Skor: '+(S.sc[0]+S.sc[1]+S.sc[2])}
+function evR(){upd();const e=$('ev');
+if(S.st==0){$('evt').textContent='📝 Babak A — Pilihan Ganda (30 poin)';const q=Q[S.q];e.innerHTML=`<p class="txt" style="font-size:clamp(15px,2.2vh,20px)"><b>Soal ${S.q+1}/3.</b> ${q[0]}</p><div class="opts">${q[1].map((o,i)=>`<button class="op" onclick="ans(this,${i})">${'ABCD'[i]}. ${o}</button>`).join('')}</div><p class="txt" id="fb"></p>`}
+else if(S.st==1){$('evt').textContent='🔗 Babak B — Menjodohkan (40 poin)';S.m=0;S.sel=null;const R=[...MP.keys()].sort((a,b)=>((a*7+3)%5)-((b*7+3)%5));let c='';MP.forEach((m,i)=>{c+=`<div class="mi" data-l="${i}" onclick="selL(this)">${m[0]}</div><div class="mi" data-r="${R[i]}" onclick="selR(this)">${MP[R[i]][1]}</div>`});e.innerHTML=`<p class="txt">Klik istilah di kiri, lalu klik pasangan definisinya di kanan.</p><div class="mt" id="mt">${c}<svg id="ln"></svg></div>`}
+else if(S.st==2){$('evt').textContent='⚖️ Babak C — Benar / Salah (30 poin)';const t=TF[S.q];e.innerHTML=`<p class="txt" style="font-size:clamp(15px,2.2vh,20px)"><b>Pernyataan ${S.q+1}/3.</b> ${t[0]}</p><div class="tf"><button class="btn" style="background:linear-gradient(135deg,#22c55e,#15803d);box-shadow:0 4px 0 #14532d" onclick="tfa(1)">✓ BENAR</button><button class="btn" style="background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 4px 0 #7f1d1d" onclick="tfa(0)">✗ SALAH</button></div><p class="txt" id="fb"></p>`}
+else{$('evt').textContent='🏆 Rekapitulasi Skor';const T=S.sc[0]+S.sc[1]+S.sc[2];e.style.alignItems='center';e.innerHTML=`<div class="big" style="font-size:clamp(50px,8vh,70px)">🏆</div><div class="sc">${T}</div><p class="txt">Pilihan Ganda: <b>${S.sc[0]}/30</b> • Menjodohkan: <b>${S.sc[1]}/40</b> • Benar/Salah: <b>${S.sc[2]}/30</b></p><p class="txt"><b>${T>=80?'Luar biasa! ⭐⭐⭐':T>=60?'Bagus, terus berlatih! ⭐⭐':'Ayo pelajari materi lagi! ⭐'}</b></p><button class="btn" onclick="evStart()">🔄 ULANGI</button>`;sOk()}
+if(S.st!=3)e.style.alignItems=''}
+function nxt(){setTimeout(()=>{if(S.st==0||S.st==2){if(++S.q>=3){S.q=0;S.st++}}else S.st++;evR()},1100)}
+function ans(b,i){const q=Q[S.q];document.querySelectorAll('.op').forEach(x=>x.disabled=true);if(i==q[2]){b.classList.add('ok');S.sc[0]+=10;sOk();$('fb').textContent='✅ Benar! +10 poin'}else{b.classList.add('no');document.querySelectorAll('.op')[q[2]].classList.add('ok');sNo();$('fb').textContent='❌ Kurang tepat. Jawaban benar: '+q[1][q[2]]}upd();nxt()}
+function tfa(v){document.querySelectorAll('.tf .btn').forEach(x=>x.disabled=true);const t=TF[S.q];if(v==t[1]){S.sc[2]+=10;sOk();$('fb').textContent='✅ Tepat! +10 poin'}else{sNo();$('fb').textContent='❌ Pernyataan ini sebenarnya '+(t[1]?'BENAR':'SALAH')}upd();nxt()}
+function selL(el){if(el.classList.contains('d'))return;document.querySelectorAll('[data-l]').forEach(x=>x.classList.remove('s'));el.classList.add('s');S.sel=el}
+function selR(el){if(!S.sel||el.classList.contains('d'))return;const L=S.sel,ok=L.dataset.l==el.dataset.r,mt=$('mt'),a=L.getBoundingClientRect(),b=el.getBoundingClientRect(),m=mt.getBoundingClientRect(),k=m.width/mt.offsetWidth;
+const x1=(a.right-m.left)/k,y1=(a.top+a.height/2-m.top)/k,x2=(b.left-m.left)/k,y2=(b.top+b.height/2-m.top)/k;
+const ln=document.createElementNS('http://www.w3.org/2000/svg','line');ln.setAttribute('x1',x1);ln.setAttribute('y1',y1);ln.setAttribute('x2',x2);ln.setAttribute('y2',y2);ln.setAttribute('stroke',ok?'#16a34a':'#dc2626');ln.setAttribute('stroke-width',5);ln.setAttribute('stroke-linecap','round');ln.setAttribute('stroke-dasharray','600');ln.setAttribute('stroke-dashoffset','600');ln.style.transition='stroke-dashoffset .4s';$('ln').appendChild(ln);requestAnimationFrame(()=>ln.setAttribute('stroke-dashoffset','0'));
+L.classList.remove('s');S.sel=null;
+if(ok){L.classList.add('d');el.classList.add('d');S.sc[1]+=10;sOk();upd();if(++S.m==4)nxt()}else{sNo();setTimeout(()=>ln.remove(),700)}}
+</script></body></html>
